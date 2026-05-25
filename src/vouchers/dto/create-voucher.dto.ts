@@ -15,7 +15,7 @@ export class CreateVoucherDto {
   discount!: number
 
   @IsDateString()
-  expiredAt!: Date
+  expiredAt!: string
 
   @IsBoolean()
   isActive!: boolean
