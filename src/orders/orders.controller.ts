@@ -41,12 +41,11 @@ export class OrdersController {
     )
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.SUPER_ADMIN, Role.STAFF)
-  @Get()
-  findAll() {
-    return this.ordersService.findAll()
-  }
+  @UseGuards(JwtAuthGuard)
+@Get()
+findAll() {
+  return this.ordersService.findAll()
+}
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')

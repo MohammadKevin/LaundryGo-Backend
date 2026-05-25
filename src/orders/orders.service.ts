@@ -67,6 +67,7 @@ export class OrdersService {
         service: true,
         outlet: true,
         payment: true,
+        voucher: true,
       },
       orderBy: {
         createdAt: 'desc',
