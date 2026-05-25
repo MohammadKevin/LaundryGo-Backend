@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  STAFF
+  KURIR
+  PELANGGAN
+}
+
+enum OrderStatus {
+  MENUNGGU_KONFIRMASI
+  DITOLAK
+  KURIR_DITUGASKAN
+  LAUNDRY_DIJEMPUT
+  LAUNDRY_DITERIMA
+  DIPROSES
+  DICUCI
+  DIKERINGKAN
+  DISETRIKA
+  SELESAI_DIPROSES
+  SEDANG_DIANTAR
+  MENUNGGU_DIAMBIL
+  SELESAI
+}
+
+enum PaymentMethod {
+  QRIS
+  TRANSFER
+  COD
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum DeliveryMethod {
+  PICKUP
+  SELF_DROPOFF
+}
+
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  password       String
+  phone          String   @unique
+  address        String?
+  profilePicture String?
+  role           Role     @default(PELANGGAN)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  outletId String?
+  outlet   Outlet? @relation(fields: [outletId], references: [id])
+
+  customerOrders Order[] @relation("CustomerOrders")
+  courierOrders  Order[] @relation("CourierOrders")
+  staffOrders    Order[] @relation("StaffOrders")
+
+  reviews Review[]
+}
+
+model Outlet {
+  id        String   @id @default(cuid())
+  name      String
+  address   String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users    User[]
+  services LaundryService[]
+  vouchers Voucher[]
+  orders   Order[]
+}
+
+model LaundryService {
+  id            String   @id @default(cuid())
+  name          String
+  description   String?
+  price         Float
+  estimatedHour Int
+  isExpress     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  outletId String
+  outlet   Outlet @relation(fields: [outletId], references: [id])
+
+  orders Order[]
+}
+
+model Voucher {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  discount  Float
+  expiredAt DateTime
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  outletId String
+  outlet   Outlet @relation(fields: [outletId], references: [id])
+
+  orders Order[]
+}
+
+model Order {
+  id                  String         @id @default(cuid())
+  orderNumber         String         @unique
+  weight              Float?
+  totalPrice          Float?
+  pickupAddress       String?
+  note                String?
+  rejectReason        String?
+  laundryPhoto        String?
+  estimatedFinishedAt DateTime?
+  finishedAt          DateTime?
+  deliveryMethod      DeliveryMethod
+  status              OrderStatus    @default(MENUNGGU_KONFIRMASI)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  customerId String
+  customer   User   @relation("CustomerOrders", fields: [customerId], references: [id])
+
+  courierId String?
+  courier   User?   @relation("CourierOrders", fields: [courierId], references: [id])
+
+  staffId String?
+  staff   User?   @relation("StaffOrders", fields: [staffId], references: [id])
+
+  outletId String
+  outlet   Outlet @relation(fields: [outletId], references: [id])
+
+  serviceId String
+  service   LaundryService @relation(fields: [serviceId], references: [id])
+
+  voucherId String?
+  voucher   Voucher? @relation(fields: [voucherId], references: [id])
+
+  payment Payment?
+  review  Review?
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  amount        Float
+  paymentMethod PaymentMethod
+  paymentStatus PaymentStatus @default(PENDING)
+  paymentProof  String?
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  orderId String @unique
+  order   Order  @relation(fields: [orderId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  orderId String @unique
+  order   Order  @relation(fields: [orderId], references: [id])
+}
