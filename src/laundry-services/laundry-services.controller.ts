@@ -21,7 +21,7 @@ import { UpdateLaundryServiceDto } from './dto/update-laundry-service.dto'
 
 import { LaundryServicesService } from './laundry-services.service'
 
-@Controller('laundry-services')
+@Controller('services')
 export class LaundryServicesController {
   constructor(
     private readonly laundryServicesService: LaundryServicesService,
