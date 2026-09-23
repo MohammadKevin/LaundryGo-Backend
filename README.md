@@ -12,19 +12,19 @@
 
 ---
 
-## 📌 Overview
+## Overview
 Scalable NestJS API service powering laundry order scheduling, billing calculation, automated status progression, and outlet management.
 
 ---
 
-## ✨ Key Features
+## Key Features
 - Price calculation engine based on weight, item type, and service tier
 - Customer order history and digital receipt generation
 - Role-based authentication for Administrators, Cashiers, and Couriers
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Framework**: NestJS
 - **Language**: TypeScript
 - **ORM**: Prisma ORM
@@ -32,7 +32,7 @@ Scalable NestJS API service powering laundry order scheduling, billing calculati
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 ```text
 LaundryGo-Backend/
 ├── src/
@@ -45,7 +45,7 @@ LaundryGo-Backend/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 Make sure you have the required runtimes and tools installed on your machine:
@@ -62,7 +62,7 @@ npm run start:dev
 
 ---
 
-## 👤 Author
+## Author
 **Mohammad Kevin Arif Rudianto**
 - **GitHub:** [@MohammadKevin](https://github.com/MohammadKevin)
 - **Portfolio:** [portfolio-mohammadkevin.vercel.app](https://portfolio-mohammadkevin.vercel.app)
@@ -71,9 +71,9 @@ npm run start:dev
 
 ---
 
-## 📄 License
+## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 <div align="center">
-⭐️ If you found this repository useful, please consider giving it a star!
+If you found this repository useful, please consider giving it a star!
 </div>
