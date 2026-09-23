@@ -18,9 +18,9 @@ Scalable NestJS API service powering laundry order scheduling, billing calculati
 ---
 
 ## ✨ Key Features
-- ⚡ **Price calculation engine based on weight, item type, and service tier**: Price calculation engine based on weight, item type, and service tier
-- ⚡ **Customer order history and digital receipt generation**: Customer order history and digital receipt generation
-- ⚡ **Role-based authentication for Administrators, Cashiers, and Couriers**: Role-based authentication for Administrators, Cashiers, and Couriers
+- Price calculation engine based on weight, item type, and service tier
+- Customer order history and digital receipt generation
+- Role-based authentication for Administrators, Cashiers, and Couriers
 
 ---
 
